@@ -31,6 +31,7 @@
   <depend>grid_map_msgs</depend>
   <depend>grid_map_core</depend>
   <depend>octomap_msgs</depend>
+  <depend>extended_mapping_msgs</depend>
 
   <test_depend>ament_lint_common</test_depend>
   <test_depend>ament_lint_auto</test_depend>

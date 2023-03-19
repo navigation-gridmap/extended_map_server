@@ -25,6 +25,7 @@ find_package(grid_map_core REQUIRED)
 find_package(octomap REQUIRED)
 find_package(octomap_msgs REQUIRED)
 find_package(octomap_ros REQUIRED)
+find_package(extended_mapping_msgs REQUIRED)
 
 nav2_package()
 
