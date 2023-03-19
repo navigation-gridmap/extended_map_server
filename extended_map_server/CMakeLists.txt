@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(nav2_map_server)
+project(extended_map_server)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake_modules)
 
@@ -12,6 +12,7 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
+find_package(extended_mapping_msgs REQUIRED)
 find_package(yaml_cpp_vendor REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(tf2 REQUIRED)
@@ -81,6 +82,7 @@ set(map_server_dependencies
   rclcpp_components
   nav_msgs
   nav2_msgs
+  extended_mapping_msgs
   yaml_cpp_vendor
   std_msgs
   nav2_util
@@ -99,6 +101,7 @@ set(map_saver_dependencies
   rclcpp_lifecycle
   nav_msgs
   nav2_msgs
+  extended_mapping_msgs
   nav2_util
   grid_map_ros
   grid_map_msgs

@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>nav2_map_server</name>
-  <version>1.1.0</version>
+  <name>extended_map_server</name>
+  <version>0.1</version>
   <description>
-    Refactored map server for ROS2 Navigation
+    Extended map server for ROS 2 Navigation in order to incorporate elevation and obstacle information in 3D.
+    Based on the original nav2_map_server
   </description>
-  <maintainer email="brian.wilcox@intel.com">Brian Wilcox</maintainer>
+  <maintainer email="i.lopezb.2019@alumnos.urjc.es">Iván López Broceño</maintainer>
   <license>Apache-2.0</license>
   <license>BSD-3-Clause</license>
 
@@ -24,10 +25,12 @@
   <depend>tf2</depend>
   <depend>nav2_msgs</depend>
   <depend>nav2_util</depend>
+  <depend>extended_mapping_msgs</depend>
   <depend>graphicsmagick</depend>
   <depend>grid_map_ros</depend>
   <depend>grid_map_msgs</depend>
   <depend>grid_map_core</depend>
+  <depend>octomap_msgs</depend>
 
   <test_depend>ament_lint_common</test_depend>
   <test_depend>ament_lint_auto</test_depend>
