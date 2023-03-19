@@ -17,11 +17,11 @@ This is part of my final degree work at the Universidad Rey Juan Carlos, Madrid,
 
 ## How to use:
 
-I added an `example.yaml`, `example.pgm`, `example_ele.pgm`, and `example_octo.ot` to `nav2_map_server/test` so it can be tried out easily.
+I added an `example.yaml`, `example.pgm`, `example_ele.pgm`, and `example_octo.ot` to `extended_map_server/test` so it can be tried out easily.
 
 ### Serving the maps
 
-At `navigation2/nav2_map_server/test`, the file `example.yaml` is:
+At `navigation2/extended_map_server/test`, the file `example.yaml` is:
 
     image: example.pgm
     mode: trinary
@@ -46,7 +46,7 @@ Note: octomap section is not necessary to load a grid_map with elevation informa
 
 With this file and `topic_name` parameter set to "map" (default):
 
-    $ ros2 run nav2_map_server map_server --ros-args -p yaml_filename:=example.yaml
+    $ ros2 run extended_map_server map_server --ros-args -p yaml_filename:=example.yaml
     .....
     .....
 
@@ -74,7 +74,7 @@ When saving the maps, behaviour changes depending on the type of the topic and w
 
 With the topics created from the previous example:
 
-    $ ros2 run nav2_map_server map_saver_cli -t /grid_map_map --octo_t /octomap_map -f example_saving
+    $ ros2 run extended_map_server map_saver_cli -t /grid_map_map --octo_t /octomap_map -f example_saving
     [INFO] [1674527902.388702271] [map_saver]: 
 	map_saver lifecycle node launched. 
 	Waiting on external lifecycle transitions to activate

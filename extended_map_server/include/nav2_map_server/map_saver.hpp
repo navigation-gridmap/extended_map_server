@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef NAV2_MAP_SERVER__MAP_SAVER_HPP_
-#define NAV2_MAP_SERVER__MAP_SAVER_HPP_
+#ifndef EXTENDED_MAP_SERVER__MAP_SAVER_HPP_
+#define EXTENDED_MAP_SERVER__MAP_SAVER_HPP_
 
 #include <octomap/octomap.h>
 
@@ -23,7 +23,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav2_util/lifecycle_node.hpp"
-#include "nav2_msgs/srv/save_map.hpp"
+#include "extended_mapping_msgs/srv/extended_save_map.hpp"
 #include "grid_map_ros/grid_map_ros.hpp"
 #include "grid_map_msgs/msg/grid_map.hpp"
 
@@ -33,24 +33,24 @@
 
 #include "map_io.hpp"
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 
 /**
- * @class nav2_map_server::MapSaver
+ * @class extended_map_server::MapSaver
  * @brief A class that provides map saving methods and services
  */
 class MapSaver : public nav2_util::LifecycleNode
 {
 public:
   /**
-   * @brief Constructor for the nav2_map_server::MapSaver
+   * @brief Constructor for the extended_map_server::MapSaver
    * @param options Additional options to control creation of the node.
    */
   explicit MapSaver(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
 
   /**
-   * @brief Destructor for the nav2_map_server::MapServer
+   * @brief Destructor for the extended_map_server::MapServer
    */
   ~MapSaver();
 
@@ -108,8 +108,8 @@ protected:
    */
   void saveMapCallback(
     const std::shared_ptr<rmw_request_id_t> request_header,
-    const std::shared_ptr<nav2_msgs::srv::SaveMap::Request> request,
-    std::shared_ptr<nav2_msgs::srv::SaveMap::Response> response);
+    const std::shared_ptr<extended_mapping_msgs::srv::ExtendedSaveMap::Request> request,
+    std::shared_ptr<extended_mapping_msgs::srv::ExtendedSaveMap::Response> response);
 
   bool saveOccGridTopicToFile(
     const std::string & map_topic,
@@ -130,9 +130,9 @@ protected:
   // The name of the service for saving a map from topic
   const std::string save_map_service_name_{"save_map"};
   // A service to save the map to a file at run time (SaveMap)
-  rclcpp::Service<nav2_msgs::srv::SaveMap>::SharedPtr save_map_service_;
+  rclcpp::Service<extended_mapping_msgs::srv::ExtendedSaveMap>::SharedPtr save_map_service_;
 };
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
 
-#endif  // NAV2_MAP_SERVER__MAP_SAVER_HPP_
+#endif  // EXTENDED_MAP_SERVER__MAP_SAVER_HPP_

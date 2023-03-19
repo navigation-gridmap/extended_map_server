@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "nav2_map_server/map_io.hpp"
+#include "extended_map_server/map_io.hpp"
 
 #ifndef _WIN32
 #include <libgen.h>
@@ -93,7 +93,7 @@ char * dirname(char * path)
 }
 #endif
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 using nav2_util::geometry_utils::orientationAroundZAxis;
 
@@ -924,7 +924,7 @@ bool saveMapToFile(
     checkSaveParameters(save_parameters_loc);
     save_parameters_loc.map_file_name = save_parameters_loc.map_file_name + "_ele";
     // elevation must be read in scale mode
-    save_parameters_loc.mode = nav2_map_server::MapMode::Scale;
+    save_parameters_loc.mode = extended_map_server::MapMode::Scale;
     save_parameters_loc.min_height = min_h;
     save_parameters_loc.max_height = max_h;
     tryWriteMapToFile(ele_grid, save_parameters_loc);
@@ -993,4 +993,4 @@ bool saveOctomapToFile(
   return true;
 }
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server

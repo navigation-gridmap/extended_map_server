@@ -14,7 +14,7 @@
 
 #include <memory>
 
-#include "nav2_map_server/costmap_filter_info_server.hpp"
+#include "extended_map_server/costmap_filter_info_server.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char * argv[])
@@ -24,7 +24,7 @@ int main(int argc, char * argv[])
   RCLCPP_INFO(logger, "This is costmap filter info publisher");
 
   rclcpp::init(argc, argv);
-  auto node = std::make_shared<nav2_map_server::CostmapFilterInfoServer>();
+  auto node = std::make_shared<extended_map_server::CostmapFilterInfoServer>();
   rclcpp::spin(node->get_node_base_interface());
   rclcpp::shutdown();
 

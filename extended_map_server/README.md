@@ -105,7 +105,7 @@ Like in ROS1 `map_saver` could be used as CLI-executable. It was renamed to `map
 and could be invoked by following command:
 
 ```
-$ ros2 run nav2_map_server map_saver_cli [arguments] [--ros-args ROS remapping args]
+$ ros2 run extended_map_server map_saver_cli [arguments] [--ros-args ROS remapping args]
 ```
 
 ## Currently Supported Map Types
@@ -132,7 +132,7 @@ a "save_map" service. See nav2_msgs/srv/LoadMap.srv and nav2_msgs/srv/SaveMap.sr
 For using these services `map_server`/`map_saver` should be launched as a continuously running
 `nav2::LifecycleNode` node. In addition to the CLI, `Map Saver` has a functionality of server
 handling incoming services. To run `Map Saver` in a server mode
-`nav2_map_server/launch/map_saver_server.launch.py` launch-file could be used.
+`extended_map_server/launch/map_saver_server.launch.py` launch-file could be used.
 
 Service usage examples:
 

@@ -29,7 +29,7 @@ def generate_launch_description():
 
     # Nodes launching commands
     start_map_saver_server_cmd = launch_ros.actions.Node(
-            package='nav2_map_server',
+            package='extended_map_server',
             executable='map_saver_server',
             output='screen',
             emulate_tty=True,  # https://github.com/ros2/launch/issues/188

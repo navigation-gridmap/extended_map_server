@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "nav2_map_server/map_mode.hpp"
+#include "extended_map_server/map_mode.hpp"
 
 #include <stdexcept>
 #include <string>
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 const char * map_mode_to_string(MapMode map_mode)
 {
@@ -49,4 +49,4 @@ MapMode map_mode_from_string(std::string map_mode_name)
     throw std::invalid_argument("map_mode_name");
   }
 }
-}  // namespace nav2_map_server
+}  // namespace extended_map_server

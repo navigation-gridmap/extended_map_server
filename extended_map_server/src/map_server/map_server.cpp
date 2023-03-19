@@ -44,7 +44,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "nav2_map_server/map_server.hpp"
+#include "extended_map_server/map_server.hpp"
 
 #include <string>
 #include <memory>
@@ -54,12 +54,12 @@
 
 #include "yaml-cpp/yaml.h"
 #include "lifecycle_msgs/msg/state.hpp"
-#include "nav2_map_server/map_io.hpp"
+#include "extended_map_server/map_io.hpp"
 
 using namespace std::chrono_literals;
 using namespace std::placeholders;
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 
 MapServer::MapServer(const rclcpp::NodeOptions & options)
@@ -93,8 +93,8 @@ MapServer::on_configure(const rclcpp_lifecycle::State & /*state*/)
   if (!yaml_filename.empty()) {
     // Shared pointer to LoadMap::Response is also should be initialized
     // in order to avoid null-pointer dereference
-    std::shared_ptr<nav2_msgs::srv::LoadMap::Response> rsp =
-      std::make_shared<nav2_msgs::srv::LoadMap::Response>();
+    std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Response> rsp =
+      std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Response>();
 
     if (!loadMapResponseFromYaml(yaml_filename, rsp)) {
       throw std::runtime_error("Failed to load map yaml file: " + yaml_filename);
@@ -136,7 +136,7 @@ MapServer::on_configure(const rclcpp_lifecycle::State & /*state*/)
     rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable());
 
   // Create a service that loads the occupancy grid from a file
-  load_map_service_ = create_service<nav2_msgs::srv::LoadMap>(
+  load_map_service_ = create_service<extended_mapping_msgs::srv::ExtendedLoadMap>(
     service_prefix + std::string(load_map_service_name_),
     std::bind(&MapServer::loadMapCallback, this, _1, _2, _3));
 
@@ -252,8 +252,8 @@ void MapServer::getGridMapCallback(
 
 void MapServer::loadMapCallback(
   const std::shared_ptr<rmw_request_id_t>/*request_header*/,
-  const std::shared_ptr<nav2_msgs::srv::LoadMap::Request> request,
-  std::shared_ptr<nav2_msgs::srv::LoadMap::Response> response)
+  const std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Request> request,
+  std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Response> response)
 {
   // if not in ACTIVE state, ignore request
   if (get_current_state().id() != lifecycle_msgs::msg::State::PRIMARY_STATE_ACTIVE) {
@@ -278,17 +278,17 @@ void MapServer::loadMapCallback(
 
 bool MapServer::loadMapResponseFromYaml(
   const std::string & yaml_file,
-  std::shared_ptr<nav2_msgs::srv::LoadMap::Response> response)
+  std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Response> response)
 {
   switch (loadMapFromYaml(yaml_file, msg_, msg_grid_map_, msg_octomap_)) {
     case MAP_DOES_NOT_EXIST:
-      response->result = nav2_msgs::srv::LoadMap::Response::RESULT_MAP_DOES_NOT_EXIST;
+      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_MAP_DOES_NOT_EXIST;
       return false;
     case INVALID_MAP_METADATA:
-      response->result = nav2_msgs::srv::LoadMap::Response::RESULT_INVALID_MAP_METADATA;
+      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_METADATA;
       return false;
     case INVALID_MAP_DATA:
-      response->result = nav2_msgs::srv::LoadMap::Response::RESULT_INVALID_MAP_DATA;
+      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_DATA;
       return false;
     case LOAD_MAP_SUCCESS:
       // Correcting msg_ header when it belongs to specific node
@@ -298,7 +298,7 @@ bool MapServer::loadMapResponseFromYaml(
       response->map = msg_;
       response->grid_map = msg_grid_map_;
       response->octomap = msg_octomap_;
-      response->result = nav2_msgs::srv::LoadMap::Response::RESULT_SUCCESS;
+      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_SUCCESS;
   }
 
   return true;
@@ -341,11 +341,11 @@ void MapServer::updateTransform()
   map_to_grid_map_t_.transform.rotation.w = msg_.info.origin.orientation.w;
 }
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
 
 #include "rclcpp_components/register_node_macro.hpp"
 
 // Register the component with class_loader.
 // This acts as a sort of entry point, allowing the component to be discoverable when its library
 // is being loaded into a running process.
-RCLCPP_COMPONENTS_REGISTER_NODE(nav2_map_server::MapServer)
+RCLCPP_COMPONENTS_REGISTER_NODE(extended_map_server::MapServer)

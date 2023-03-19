@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef NAV2_MAP_SERVER__COSTMAP_FILTER_INFO_SERVER_HPP_
-#define NAV2_MAP_SERVER__COSTMAP_FILTER_INFO_SERVER_HPP_
+#ifndef EXTENDED_MAP_SERVER__COSTMAP_FILTER_INFO_SERVER_HPP_
+#define EXTENDED_MAP_SERVER__COSTMAP_FILTER_INFO_SERVER_HPP_
 
 #include <memory>
 
@@ -21,18 +21,18 @@
 #include "nav2_util/lifecycle_node.hpp"
 #include "nav2_msgs/msg/costmap_filter_info.hpp"
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 
 class CostmapFilterInfoServer : public nav2_util::LifecycleNode
 {
 public:
   /**
-   * @brief Constructor for the nav2_map_server::CostmapFilterInfoServer
+   * @brief Constructor for the extended_map_server::CostmapFilterInfoServer
    */
   CostmapFilterInfoServer();
   /**
-   * @brief Destructor for the nav2_map_server::CostmapFilterInfoServer
+   * @brief Destructor for the extended_map_server::CostmapFilterInfoServer
    */
   ~CostmapFilterInfoServer();
 
@@ -74,6 +74,6 @@ private:
   nav2_msgs::msg::CostmapFilterInfo msg_;
 };  // CostmapFilterInfoServer
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
 
-#endif  // NAV2_MAP_SERVER__COSTMAP_FILTER_INFO_SERVER_HPP_
+#endif  // EXTENDED_MAP_SERVER__COSTMAP_FILTER_INFO_SERVER_HPP_

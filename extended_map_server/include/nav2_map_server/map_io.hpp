@@ -14,15 +14,15 @@
 
 /* OccupancyGrid map input-output library */
 
-#ifndef NAV2_MAP_SERVER__MAP_IO_HPP_
-#define NAV2_MAP_SERVER__MAP_IO_HPP_
+#ifndef EXTENDED_MAP_SERVER__MAP_IO_HPP_
+#define EXTENDED_MAP_SERVER__MAP_IO_HPP_
 
 #include <octomap/octomap.h>
 
 #include <string>
 #include <vector>
 
-#include "nav2_map_server/map_mode.hpp"
+#include "extended_map_server/map_mode.hpp"
 #include "nav_msgs/msg/occupancy_grid.hpp"
 #include "geometry_msgs/msg/quaternion.hpp"
 #include "grid_map_ros/grid_map_ros.hpp"
@@ -34,7 +34,7 @@
 
 /* Map input part */
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 
 struct LoadParameters
@@ -137,6 +137,6 @@ bool saveOctomapToFile(
   const octomap_msgs::msg::Octomap & octomap_msg,
   const SaveParameters & save_parameters);
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
 
-#endif  // NAV2_MAP_SERVER__MAP_IO_HPP_
+#endif  // EXTENDED_MAP_SERVER__MAP_IO_HPP_

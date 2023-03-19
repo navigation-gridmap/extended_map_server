@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "nav2_map_server/map_saver.hpp"
+#include "extended_map_server/map_saver.hpp"
 
 #include <string>
 #include <memory>
@@ -39,7 +39,7 @@
 
 using namespace std::placeholders;
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 MapSaver::MapSaver(const rclcpp::NodeOptions & options)
 : nav2_util::LifecycleNode("map_saver", "", options)
@@ -72,7 +72,7 @@ MapSaver::on_configure(const rclcpp_lifecycle::State & /*state*/)
   map_subscribe_transient_local_ = get_parameter("map_subscribe_transient_local").as_bool();
 
   // Create a service that saves the occupancy grid from map topic to a file
-  save_map_service_ = create_service<nav2_msgs::srv::SaveMap>(
+  save_map_service_ = create_service<extended_mapping_msgs::srv::ExtendedSaveMap>(
     service_prefix + save_map_service_name_,
     std::bind(&MapSaver::saveMapCallback, this, _1, _2, _3));
 
@@ -120,8 +120,8 @@ MapSaver::on_shutdown(const rclcpp_lifecycle::State & /*state*/)
 
 void MapSaver::saveMapCallback(
   const std::shared_ptr<rmw_request_id_t>/*request_header*/,
-  const std::shared_ptr<nav2_msgs::srv::SaveMap::Request> request,
-  std::shared_ptr<nav2_msgs::srv::SaveMap::Response> response)
+  const std::shared_ptr<extended_mapping_msgs::srv::ExtendedSaveMap::Request> request,
+  std::shared_ptr<extended_mapping_msgs::srv::ExtendedSaveMap::Response> response)
 {
   // Set input arguments and call saveMapTopicToFile()
   SaveParameters save_parameters;
@@ -453,11 +453,11 @@ bool MapSaver::saveOctomapTopicToFile(
 
   return false;
 }
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
 
 #include "rclcpp_components/register_node_macro.hpp"
 
 // Register the component with class_loader.
 // This acts as a sort of entry point, allowing the component to be discoverable when its library
 // is being loaded into a running process.
-RCLCPP_COMPONENTS_REGISTER_NODE(nav2_map_server::MapSaver)
+RCLCPP_COMPONENTS_REGISTER_NODE(extended_map_server::MapSaver)

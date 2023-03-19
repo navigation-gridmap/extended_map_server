@@ -22,7 +22,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-#include "nav2_map_server/costmap_filter_info_server.hpp"
+#include "extended_map_server/costmap_filter_info_server.hpp"
 
 using namespace std::chrono_literals;
 
@@ -44,7 +44,7 @@ public:
 };
 RclCppFixture g_rclcppfixture;
 
-class InfoServerWrapper : public nav2_map_server::CostmapFilterInfoServer
+class InfoServerWrapper : public extended_map_server::CostmapFilterInfoServer
 {
 public:
   void start()

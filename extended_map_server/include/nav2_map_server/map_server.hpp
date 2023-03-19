@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef NAV2_MAP_SERVER__MAP_SERVER_HPP_
-#define NAV2_MAP_SERVER__MAP_SERVER_HPP_
+#ifndef EXTENDED_MAP_SERVER__MAP_SERVER_HPP_
+#define EXTENDED_MAP_SERVER__MAP_SERVER_HPP_
 
 #include <octomap/octomap.h>
 
@@ -25,7 +25,7 @@
 #include "nav2_util/lifecycle_node.hpp"
 #include "nav_msgs/msg/occupancy_grid.hpp"
 #include "nav_msgs/srv/get_map.hpp"
-#include "nav2_msgs/srv/load_map.hpp"
+#include "extended_mapping_msgs/srv/extended_load_map.hpp"
 #include "grid_map_msgs/msg/grid_map.hpp"
 #include "grid_map_msgs/srv/get_grid_map.hpp"
 
@@ -37,11 +37,11 @@
 #include "tf2/LinearMath/Quaternion.h"
 #include "tf2_ros/static_transform_broadcaster.h"
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 
 /**
- * @class nav2_map_server::MapServer
+ * @class extended_map_server::MapServer
  * @brief Parses the map yaml file and creates a service and a publisher that
  * provides occupancy grid
  */
@@ -49,13 +49,13 @@ class MapServer : public nav2_util::LifecycleNode
 {
 public:
   /**
-   * @brief A constructor for nav2_map_server::MapServer
+   * @brief A constructor for extended_map_server::MapServer
    * @param options Additional options to control creation of the node.
    */
   explicit MapServer(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
 
   /**
-   * @brief A Destructor for nav2_map_server::MapServer
+   * @brief A Destructor for extended_map_server::MapServer
    */
   ~MapServer();
 
@@ -101,7 +101,7 @@ protected:
    */
   bool loadMapResponseFromYaml(
     const std::string & yaml_file,
-    std::shared_ptr<nav2_msgs::srv::LoadMap::Response> response);
+    std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Response> response);
 
   /**
    * @brief Method correcting msg_ header when it belongs to instantiated object
@@ -142,8 +142,8 @@ protected:
    */
   void loadMapCallback(
     const std::shared_ptr<rmw_request_id_t> request_header,
-    const std::shared_ptr<nav2_msgs::srv::LoadMap::Request> request,
-    std::shared_ptr<nav2_msgs::srv::LoadMap::Response> response);
+    const std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Request> request,
+    std::shared_ptr<extended_mapping_msgs::srv::ExtendedLoadMap::Response> response);
 
   // The name of the service for getting a map
   const std::string occ_map_service_name_{"map"};
@@ -161,7 +161,7 @@ protected:
   rclcpp::Service<grid_map_msgs::srv::GetGridMap>::SharedPtr grid_map_service_;
 
   // A service to load the occupancy grid from file at run time (LoadMap)
-  rclcpp::Service<nav2_msgs::srv::LoadMap>::SharedPtr load_map_service_;
+  rclcpp::Service<extended_mapping_msgs::srv::ExtendedLoadMap>::SharedPtr load_map_service_;
 
   // A topic on which the occupancy grid will be published
   rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::OccupancyGrid>::SharedPtr occ_pub_;
@@ -192,6 +192,6 @@ protected:
   octomap_msgs::msg::Octomap msg_octomap_;
 };
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
 
-#endif  // NAV2_MAP_SERVER__MAP_SERVER_HPP_
+#endif  // EXTENDED_MAP_SERVER__MAP_SERVER_HPP_

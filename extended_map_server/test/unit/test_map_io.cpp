@@ -41,15 +41,15 @@
 #include <fstream>
 
 #include "yaml-cpp/yaml.h"
-#include "nav2_map_server/map_io.hpp"
-#include "nav2_map_server/map_server.hpp"
+#include "extended_map_server/map_io.hpp"
+#include "extended_map_server/map_server.hpp"
 #include "nav2_util/lifecycle_node.hpp"
 #include "test_constants/test_constants.h"
 
 #define TEST_DIR TEST_DIRECTORY
 
 using namespace std;  // NOLINT
-using namespace nav2_map_server;  // NOLINT
+using namespace extended_map_server;  // NOLINT
 using std::experimental::filesystem::path;
 
 class RclCppFixture

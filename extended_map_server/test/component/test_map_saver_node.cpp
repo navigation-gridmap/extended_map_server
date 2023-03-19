@@ -23,15 +23,15 @@
 #include "rclcpp/rclcpp.hpp"
 
 #include "test_constants/test_constants.h"
-#include "nav2_map_server/map_saver.hpp"
+#include "extended_map_server/map_saver.hpp"
 #include "nav2_util/lifecycle_service_client.hpp"
-#include "nav2_msgs/srv/save_map.hpp"
+#include "extended_mapping_msgs/srv/extended_save_map.hpp"
 
 #define TEST_DIR TEST_DIRECTORY
 
 using std::experimental::filesystem::path;
 using lifecycle_msgs::msg::Transition;
-using namespace nav2_map_server;  // NOLINT
+using namespace extended_map_server;  // NOLINT
 
 class RclCppFixture
 {
@@ -110,8 +110,8 @@ std::shared_ptr<nav2_util::LifecycleServiceClient> MapSaverTestFixture::lifecycl
 TEST_F(MapSaverTestFixture, SaveMap)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing SaveMap service");
-  auto req = std::make_shared<nav2_msgs::srv::SaveMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::SaveMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedSaveMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedSaveMap>(
     "/map_saver/save_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for save_map service");
@@ -124,7 +124,7 @@ TEST_F(MapSaverTestFixture, SaveMap)
   req->map_mode = "trinary";
   req->free_thresh = g_default_free_thresh;
   req->occupied_thresh = g_default_occupied_thresh;
-  auto resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, true);
 
   // 2. Load saved map and verify it
@@ -139,8 +139,8 @@ TEST_F(MapSaverTestFixture, SaveMap)
 TEST_F(MapSaverTestFixture, SaveMapDefaultParameters)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing SaveMap service");
-  auto req = std::make_shared<nav2_msgs::srv::SaveMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::SaveMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedSaveMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedSaveMap>(
     "/map_saver/save_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for save_map service");
@@ -153,7 +153,7 @@ TEST_F(MapSaverTestFixture, SaveMapDefaultParameters)
   req->map_mode = "";
   req->free_thresh = 0.0;
   req->occupied_thresh = 0.0;
-  auto resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, true);
 
   // 2. Load saved map and verify it
@@ -169,8 +169,8 @@ TEST_F(MapSaverTestFixture, SaveMapDefaultParameters)
 TEST_F(MapSaverTestFixture, SaveMapInvalidParameters)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing SaveMap service");
-  auto req = std::make_shared<nav2_msgs::srv::SaveMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::SaveMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedSaveMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedSaveMap>(
     "/map_saver/save_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for save_map service");
@@ -184,12 +184,12 @@ TEST_F(MapSaverTestFixture, SaveMapInvalidParameters)
   req->map_mode = "trinary";
   req->free_thresh = g_default_free_thresh;
   req->occupied_thresh = g_default_occupied_thresh;
-  auto resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, false);
 
   req->map_topic = "map";
   req->image_format = "invalid_format";
-  resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, true);
   nav_msgs::msg::OccupancyGrid map_msg;
   LOAD_MAP_STATUS status = loadMapFromYaml(path(g_tmp_dir) / path(g_valid_yaml_file), map_msg);
@@ -198,7 +198,7 @@ TEST_F(MapSaverTestFixture, SaveMapInvalidParameters)
 
   req->image_format = "png";
   req->map_mode = "invalid_mode";
-  resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, true);
   status = loadMapFromYaml(path(g_tmp_dir) / path(g_valid_yaml_file), map_msg);
   ASSERT_EQ(status, LOAD_MAP_SUCCESS);
@@ -207,16 +207,16 @@ TEST_F(MapSaverTestFixture, SaveMapInvalidParameters)
   req->map_mode = "trinary";
   req->free_thresh = 2.0;
   req->occupied_thresh = 2.0;
-  resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, false);
 
   req->free_thresh = -2.0;
   req->occupied_thresh = -2.0;
-  resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, false);
 
   req->free_thresh = 0.7;
   req->occupied_thresh = 0.2;
-  resp = send_request<nav2_msgs::srv::SaveMap>(node_, client, req);
+  resp = send_request<extended_mapping_msgs::srv::ExtendedSaveMap>(node_, client, req);
   ASSERT_EQ(resp->result, false);
 }

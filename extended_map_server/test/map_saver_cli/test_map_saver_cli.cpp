@@ -75,7 +75,7 @@ TEST(MapSaverCLI, CLITest)
 
   std::string command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli -f ") + file_path;
+    "ros2 run extended_map_server map_saver_cli -f ") + file_path;
   auto return_code = system(command.c_str());
   EXPECT_EQ(return_code, 0);
 
@@ -132,7 +132,7 @@ TEST(MapSaverCLI, CLITest)
 
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli -t /grid_map --octo_t /octomap -f ") +
+    "ros2 run extended_map_server map_saver_cli -t /grid_map --octo_t /octomap -f ") +
     grid_map_file_path;
   return_code = system(command.c_str());
   EXPECT_EQ(return_code, 0);
@@ -165,7 +165,7 @@ TEST(MapSaverCLI, CLITest)
 
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli "
+    "ros2 run extended_map_server map_saver_cli "
     "-t map_failure --occ 100 --free 2 --mode trinary --fmt png -f ") + file_path +
     std::string("--ros-args __node:=map_saver_test_node");
   return_code = system(command.c_str());
@@ -180,7 +180,7 @@ TEST(MapSaverCLI, CLITest)
   RCLCPP_INFO(node->get_logger(), "Testing help...");
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli -h");
+    "ros2 run extended_map_server map_saver_cli -h");
   return_code = system(command.c_str());
   EXPECT_EQ(return_code, 0);
 
@@ -189,7 +189,7 @@ TEST(MapSaverCLI, CLITest)
   RCLCPP_INFO(node->get_logger(), "Testing invalid mode...");
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli --mode fake_mode");
+    "ros2 run extended_map_server map_saver_cli --mode fake_mode");
   return_code = system(command.c_str());
   EXPECT_EQ(return_code, 0);
 
@@ -198,7 +198,7 @@ TEST(MapSaverCLI, CLITest)
   RCLCPP_INFO(node->get_logger(), "Testing missing argument...");
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli --mode");
+    "ros2 run extended_map_server map_saver_cli --mode");
   return_code = system(command.c_str());
   EXPECT_EQ(return_code, 65280);
 
@@ -207,7 +207,7 @@ TEST(MapSaverCLI, CLITest)
   RCLCPP_INFO(node->get_logger(), "Testing wrong argument...");
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli --free 0 0");
+    "ros2 run extended_map_server map_saver_cli --free 0 0");
   return_code = system(command.c_str());
   EXPECT_EQ(return_code, 65280);
 
@@ -215,7 +215,7 @@ TEST(MapSaverCLI, CLITest)
 
   command =
     std::string(
-    "ros2 run nav2_map_server map_saver_cli --ros-args -r __node:=map_saver_test_node");
+    "ros2 run extended_map_server map_saver_cli --ros-args -r __node:=map_saver_test_node");
   return_code = system(command.c_str());
   EXPECT_EQ(return_code, 0);
 }

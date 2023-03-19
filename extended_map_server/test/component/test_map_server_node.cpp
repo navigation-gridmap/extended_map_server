@@ -22,9 +22,9 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include "test_constants/test_constants.h"
-#include "nav2_map_server/map_server.hpp"
+#include "extended_map_server/map_server.hpp"
 #include "nav2_util/lifecycle_service_client.hpp"
-#include "nav2_msgs/srv/load_map.hpp"
+#include "extended_mapping_msgs/srv/extended_load_map.hpp"
 
 #include <octomap_msgs/msg/octomap.hpp>
 #include "octomap_msgs/conversions.h"
@@ -179,17 +179,17 @@ TEST_F(MapServerTestFixture, GetMap)
 TEST_F(MapServerTestFixture, LoadMap)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing LoadMap service");
-  auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::LoadMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>(
     "/map_server/load_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for load_map service");
   ASSERT_TRUE(client->wait_for_service());
 
   req->map_url = path(TEST_DIR) / path(g_valid_yaml_file);
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, client, req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_SUCCESS);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_SUCCESS);
   verifyMapMsg(resp->map);
 }
 
@@ -197,8 +197,8 @@ TEST_F(MapServerTestFixture, LoadMap)
 TEST_F(MapServerTestFixture, LoadMapNull)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing LoadMap service");
-  auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::LoadMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>(
     "/map_server/load_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for load_map service");
@@ -206,17 +206,17 @@ TEST_F(MapServerTestFixture, LoadMapNull)
 
   req->map_url = "";
   RCLCPP_INFO(node_->get_logger(), "Sending load_map request with null file name");
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, client, req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_MAP_DOES_NOT_EXIST);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_MAP_DOES_NOT_EXIST);
 }
 
 // Send map loading service request with non-existing yaml file
 TEST_F(MapServerTestFixture, LoadMapInvalidYaml)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing LoadMap service");
-  auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::LoadMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>(
     "/map_server/load_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for load_map service");
@@ -224,17 +224,17 @@ TEST_F(MapServerTestFixture, LoadMapInvalidYaml)
 
   req->map_url = "invalid_file.yaml";
   RCLCPP_INFO(node_->get_logger(), "Sending load_map request with invalid yaml file name");
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, client, req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_INVALID_MAP_METADATA);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_METADATA);
 }
 
 // Send map loading service request with yaml file containing non-existing map
 TEST_F(MapServerTestFixture, LoadMapInvalidImage)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing LoadMap service");
-  auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::LoadMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>(
     "/map_server/load_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for load_map service");
@@ -242,9 +242,9 @@ TEST_F(MapServerTestFixture, LoadMapInvalidImage)
 
   req->map_url = path(TEST_DIR) / "invalid_image.yaml";
   RCLCPP_INFO(node_->get_logger(), "Sending load_map request with invalid image file name");
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, client, req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_INVALID_MAP_DATA);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_DATA);
 }
 
 /**
@@ -270,22 +270,22 @@ TEST_F(MapServerTestFixture, NoInitialMap)
   lifecycle_client_->change_state(Transition::TRANSITION_CONFIGURE, 3s);
 
   RCLCPP_INFO(node_->get_logger(), "Testing LoadMap service while not being active");
-  auto load_map_req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto load_map_cl = node_->create_client<nav2_msgs::srv::LoadMap>("/map_server/load_map");
+  auto load_map_req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto load_map_cl = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>("/map_server/load_map");
 
   ASSERT_TRUE(load_map_cl->wait_for_service(3s));
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, load_map_cl, load_map_req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, load_map_cl, load_map_req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_UNDEFINED_FAILURE);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_UNDEFINED_FAILURE);
 
   // activate server and load map:
   lifecycle_client_->change_state(Transition::TRANSITION_ACTIVATE, 3s);
   RCLCPP_INFO(node_->get_logger(), "active again");
 
   load_map_req->map_url = path(TEST_DIR) / path(g_valid_yaml_file);
-  auto load_res = send_request<nav2_msgs::srv::LoadMap>(node_, load_map_cl, load_map_req);
+  auto load_res = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, load_map_cl, load_map_req);
 
-  ASSERT_EQ(load_res->result, nav2_msgs::srv::LoadMap::Response::RESULT_SUCCESS);
+  ASSERT_EQ(load_res->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_SUCCESS);
   verifyMapMsg(load_res->map);
 }
 
@@ -294,17 +294,17 @@ TEST_F(MapServerTestFixture, NoInitialMap)
 TEST_F(MapServerTestFixture, LoadGridMap)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing LoadGridMap service");
-  auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::LoadMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>(
     "/map_server/load_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for load_map service");
   ASSERT_TRUE(client->wait_for_service());
 
   req->map_url = path(TEST_DIR) / path(g_valid_grid_map_yaml_file);
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, client, req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_SUCCESS);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_SUCCESS);
   verifyGridMapMsg(resp->grid_map);
 }
 
@@ -312,16 +312,16 @@ TEST_F(MapServerTestFixture, LoadGridMap)
 TEST_F(MapServerTestFixture, LoadOctomap)
 {
   RCLCPP_INFO(node_->get_logger(), "Testing LoadGridMap service");
-  auto req = std::make_shared<nav2_msgs::srv::LoadMap::Request>();
-  auto client = node_->create_client<nav2_msgs::srv::LoadMap>(
+  auto req = std::make_shared<extended_mapping_msgs::srv::ExtendedLoadMap::Request>();
+  auto client = node_->create_client<extended_mapping_msgs::srv::ExtendedLoadMap>(
     "/map_server/load_map");
 
   RCLCPP_INFO(node_->get_logger(), "Waiting for load_map service");
   ASSERT_TRUE(client->wait_for_service());
 
   req->map_url = path(TEST_DIR) / path(g_valid_octomap_yaml_file);
-  auto resp = send_request<nav2_msgs::srv::LoadMap>(node_, client, req);
+  auto resp = send_request<extended_mapping_msgs::srv::ExtendedLoadMap>(node_, client, req);
 
-  ASSERT_EQ(resp->result, nav2_msgs::srv::LoadMap::Response::RESULT_SUCCESS);
+  ASSERT_EQ(resp->result, extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_SUCCESS);
   verifyOctomapMsg(resp->octomap);
 }

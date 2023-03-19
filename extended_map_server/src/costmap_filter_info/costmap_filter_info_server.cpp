@@ -15,13 +15,13 @@
 // TODO(AlexeyMerzlyakov): This dummy info publisher should be removed
 // after Semantic Map Server having the same functionality will be developed.
 
-#include "nav2_map_server/costmap_filter_info_server.hpp"
+#include "extended_map_server/costmap_filter_info_server.hpp"
 
 #include <string>
 #include <memory>
 #include <utility>
 
-namespace nav2_map_server
+namespace extended_map_server
 {
 
 CostmapFilterInfoServer::CostmapFilterInfoServer()
@@ -105,4 +105,4 @@ CostmapFilterInfoServer::on_shutdown(const rclcpp_lifecycle::State & /*state*/)
   return nav2_util::CallbackReturn::SUCCESS;
 }
 
-}  // namespace nav2_map_server
+}  // namespace extended_map_server
