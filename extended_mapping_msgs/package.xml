@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>extended_mapping_msgs</name>
-  <version>0.1</version>
+  <version>0.1.0</version>
   <description>Service files to load and save extended map information</description>
   <maintainer email="i.lopezv.2019@alumnos.urjc.es">Iván Lópezz Broceño</maintainer>
   <license>Apache-2.0</license>
