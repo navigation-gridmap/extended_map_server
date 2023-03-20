@@ -1,3 +1,9 @@
+# Extended Map Server
+The `extended_map_server` package is based on the `map_saver` package for Nav2 and allows the possibility of incorporating elavation information through `grid_map` and 3D obstacles information through `octomap` when saving and loading maps.
+
+To do that, `extended_map_server` preserves the previos funcionality but uses 2 different services to serve and load the map given by the `extended_mapping_msgs` package: `extended_mapping_msgs/srv/ExtendedSaveMap` and `extended_mapping_msgs/srv/ExtendedLoadMap`
+
+
 # Map Server
 
 The `Map Server` provides maps to the rest of the Nav2 system using both topic and
