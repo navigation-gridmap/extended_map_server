@@ -51,9 +51,10 @@ add_executable(${map_saver_server_executable}
 add_executable(${costmap_filter_info_server_executable}
   src/costmap_filter_info/main.cpp)
 
-set(map_io_library_name map_io)
+set(map_io_library_name extended_map_io)
 
-set(library_name ${map_server_executable}_core)
+set(library_name extended_${map_server_executable}_core)
+#set(library_name ${map_server_executable}_core)
 
 add_library(${map_io_library_name} SHARED
   src/map_mode.cpp
