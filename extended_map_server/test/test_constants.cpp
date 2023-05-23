@@ -86,6 +86,7 @@ const char * g_valid_yaml_file = "testmap.yaml";
 const char * g_valid_grid_map_yaml_file = "testmap_gridmap.yaml";
 const char * g_valid_ele_image_file = "ele_testmap.pgm";
 const char * g_valid_octomap_yaml_file = "testmap_octomap.yaml";
+const char * g_valid_octo_file_name = "octo_test.ot";
 const char * g_tmp_dir = "/tmp";
 
 const double g_valid_image_res = 0.1;
@@ -94,3 +95,4 @@ const double g_default_free_thresh = 0.196;
 const double g_default_occupied_thresh = 0.65;
 const double g_min_height = -1;
 const double g_max_height = 1;
+const bool g_binary = false;

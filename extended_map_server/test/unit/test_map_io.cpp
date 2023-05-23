@@ -79,8 +79,9 @@ protected:
     load_parameters.mode = MapMode::Trinary;
     load_parameters.negate = 0;
   }
+
   // Fill LoadParameters with standard for testing values only for the elevation part
-  // Input: image_file_name
+  // Input: ele_image_file_name
   // Output: load_parameters
   void fillGridMapLoadParameters(
     const std::string & ele_image_file_name,
@@ -90,6 +91,18 @@ protected:
     load_parameters.min_height = g_min_height;
     load_parameters.max_height = g_max_height;
   }
+
+  // Fill LoadParameters with standard for testing values only for the elevation part
+  // Input: octo_file_name
+  // Output: load_parameters
+  void fillOctomapLoadParameters(
+    const std::string & octo_file_name,
+    LoadParameters & load_parameters)
+  {
+    load_parameters.octomap_file_name = octo_file_name;
+    load_parameters.binary = g_binary;
+  }
+
   // Fill SaveParameters with standard for testing values
   // Input: map_file_name, image_format
   // Output: save_parameters
@@ -336,6 +349,19 @@ TEST_F(MapIOTester, loadValidGridMapYAML)
   ASSERT_EQ(loadParameters.elevation_image_file_name, refLoadParameters.elevation_image_file_name);
   ASSERT_FLOAT_EQ(loadParameters.min_height, refLoadParameters.min_height);
   ASSERT_FLOAT_EQ(loadParameters.max_height, refLoadParameters.max_height);
+}
+
+// Load valid elevation YAML file and check octomap param for consistency
+TEST_F(MapIOTester, loadValidOctomapYAML)
+{
+  LoadParameters loadParameters;
+  ASSERT_NO_THROW(loadParameters = loadMapYaml(path(TEST_DIR) / path(g_valid_octomap_yaml_file)));
+
+  LoadParameters refLoadParameters;
+  fillOctomapLoadParameters(path(TEST_DIR) / path(g_valid_octo_file_name), refLoadParameters);
+
+  ASSERT_EQ(loadParameters.octomap_file_name, refLoadParameters.octomap_file_name);
+  ASSERT_EQ(loadParameters.binary, refLoadParameters.binary);
 }
 
 // Try to load invalid YAML file
