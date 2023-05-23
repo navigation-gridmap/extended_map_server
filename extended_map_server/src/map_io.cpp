@@ -795,7 +795,9 @@ void WriteMetadataToFile(
   const grid_map_msgs::msg::GridMap & map,
   const SaveParameters & save_parameters)
 {
-  std::string mapdatafile = save_parameters.map_file_name + "_ele." + save_parameters.image_format;
+  std::string elevation_mapdatafile = save_parameters.map_file_name + "_ele." + save_parameters.image_format;
+  std::string mapdatafile = save_parameters.map_file_name + "." + save_parameters.image_format;
+  
   std::string mapmetadatafile = save_parameters.map_file_name + ".yaml";
 
   // occupancy
@@ -817,7 +819,7 @@ void WriteMetadataToFile(
   e << YAML::Newline;
   e << YAML::Comment(" elevation layer");
   e << YAML::BeginMap;
-  e << YAML::Key << "elevation_image" << YAML::Value << mapdatafile;
+  e << YAML::Key << "elevation_image" << YAML::Value << elevation_mapdatafile;
   e << YAML::Key << "min_height" << YAML::Value << save_parameters.min_height;
   e << YAML::Key << "max_height" << YAML::Value << save_parameters.max_height;
 

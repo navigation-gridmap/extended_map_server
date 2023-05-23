@@ -1,4 +1,4 @@
-image: example_ele.pgm
+image: example.pgm
 mode: trinary
 resolution: 0.2
 origin: [0, 0, 0]

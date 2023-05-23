@@ -282,13 +282,16 @@ bool MapServer::loadMapResponseFromYaml(
 {
   switch (loadMapFromYaml(yaml_file, msg_, msg_grid_map_, msg_octomap_)) {
     case MAP_DOES_NOT_EXIST:
-      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_MAP_DOES_NOT_EXIST;
+      response->result =
+        extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_MAP_DOES_NOT_EXIST;
       return false;
     case INVALID_MAP_METADATA:
-      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_METADATA;
+      response->result =
+        extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_METADATA;
       return false;
     case INVALID_MAP_DATA:
-      response->result = extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_DATA;
+      response->result =
+        extended_mapping_msgs::srv::ExtendedLoadMap::Response::RESULT_INVALID_MAP_DATA;
       return false;
     case LOAD_MAP_SUCCESS:
       // Correcting msg_ header when it belongs to specific node
