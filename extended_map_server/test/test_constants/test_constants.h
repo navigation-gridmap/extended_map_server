@@ -48,6 +48,7 @@ extern const char * g_valid_bmp_file;
 extern const char * g_valid_pgm_file;
 extern const char * g_valid_yaml_file;
 extern const char * g_valid_grid_map_yaml_file;
+extern const char * g_valid_ele_image_file;
 extern const char * g_valid_octomap_yaml_file;
 extern const char * g_tmp_dir;
 
@@ -58,5 +59,6 @@ extern const std::vector<double> g_valid_origin;
 // *INDENT-ON*
 extern const double g_default_free_thresh;
 extern const double g_default_occupied_thresh;
-
+extern const double g_min_height;
+extern const double g_max_height;
 #endif  // TEST_CONSTANTS__TEST_CONSTANTS_H_
